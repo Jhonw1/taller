@@ -1,0 +1,202 @@
+package trabajo;
+
+import javax.swing.JOptionPane;
+
+public class procesos {
+	
+	String []nombres;
+	int []edades;
+
+	public void menu() {
+		
+		int opcion = 0;
+
+		do {
+			opcion = Integer.parseInt(JOptionPane.showInputDialog("MENU\n" + "1.Lista de estudiantes con su edad\n"
+					+ "2.Promedio de edades\n" + "3.Mostrar estudiantes mayores de edad\n"
+					+ "4.Mostrar estudiantes menores de edad\n" + "5.Mostrar cuantos estudiantes son mayores de edad\n"
+					+ "6.Buscar estudiantes por nombre y mostrar su edad\n"
+					+ "7.Buscar estudiantes por edad y mostrar todos los estudiantes con esa edad\n" + "8.Salir\n"));
+
+			switch (opcion) {
+			case 1:
+				lista();
+				break;
+			case 2:
+				if (edades!=null) {
+					promedio();
+				}else {
+					JOptionPane.showMessageDialog(null,"debe llenar los datos, opcion: 1");
+				}
+				break;
+			case 3:
+				if (edades!=null&& nombres!=null) {
+					mayor();
+				}else {
+					JOptionPane.showMessageDialog(null,"debe llenar los datos, opcion: 1");
+				}
+				
+				break;
+			case 4:
+				if (edades!=null&& nombres!=null) {
+					menor();
+				}else {
+					JOptionPane.showMessageDialog(null,"debe llenar los datos, opcion: 1");
+				}
+				
+				break;
+			case 5:
+				if (edades!=null&& nombres!=null) {
+					cantidadM();
+
+				}else {
+					JOptionPane.showMessageDialog(null,"debe llenar los datos, opcion: 1");
+				}
+				break;
+			case 6:
+				if (edades!=null&& nombres!=null) {
+					busqueda();
+				}else {
+					JOptionPane.showMessageDialog(null,"debe llenar los datos, opcion: 1");
+				}
+				break;
+			case 7:
+				busquedaEdad();
+				break;
+			case 8:
+				JOptionPane.showMessageDialog(null, "se cerro el programa");
+				break;
+			default:
+				JOptionPane.showMessageDialog(null, "ingrese un numero valido");
+				break;
+			}
+
+		} while (opcion != 8);
+
+	}
+
+	public void lista() {
+
+		int cantidad = Integer.parseInt(JOptionPane.showInputDialog(null, "ingrese la " + "cantidad de estudiantes"));
+		
+		nombres= new String [cantidad];
+		edades= new int [cantidad];
+		String lista = "";
+	
+		for (int i = 0; i < cantidad; i++) {
+			String nombre = JOptionPane.showInputDialog("ingrese el nombre: " + (i+1));
+			nombres[i] = nombre;
+			int edad =Integer.parseInt(JOptionPane.showInputDialog("ingrese la edad de: " + nombres[i]));
+			edades[i] =edad;
+			lista +=  nombres[i] + " tiene " + edades[i]+" años \n";
+		}
+		JOptionPane.showMessageDialog(null, lista);
+
+	}
+
+	public void promedio() {
+		double promedio = 0;
+		int sumar = 0;
+				
+		for (int i = 0; i < edades.length; i++) {
+			sumar += edades[i];
+			promedio = sumar/edades.length;
+		}
+				
+		JOptionPane.showMessageDialog(null,"el promedio de las edades es: "+promedio);
+
+	}
+
+	public void mayor() {
+		int edadMayor=0;
+		String personaMayor="";
+		
+		for (int i = 0; i < edades.length; i++) {
+			if (edades[i]>edadMayor) {	
+				edadMayor= edades[i];
+				personaMayor= nombres[i];
+			}else if(edades[i]==edadMayor) {
+				personaMayor +="," + nombres[i];
+			}
+		}
+		JOptionPane.showMessageDialog(null,"los o el estudiante de mayor edad es: "+ personaMayor +" y su edad es: "+ edadMayor+" años");
+		
+	}
+
+	public void menor() {
+		int edadMenor= edades[0];
+		String personaMenor="";
+		for (int i = 0; i < edades.length; i++) {
+			if(edades[i]<edadMenor) {
+				edadMenor=edades[i];
+				personaMenor=nombres[i];
+				
+			}else if(edades[i]==edadMenor) {
+				personaMenor +="," + nombres[i];
+			}
+			
+		}
+		JOptionPane.showMessageDialog(null,"los o el estudiante de menor edad es: "+ personaMenor +" y su edad es: "+edadMenor+" años");
+
+	}
+
+	public void cantidadM() {
+		
+		int cantidadMayor=0;
+		for (int i = 0; i < edades.length; i++) {
+			if(edades[i]>=18) {
+				cantidadMayor++;
+			}
+		}
+		
+		JOptionPane.showMessageDialog(null, "en total hay: "+cantidadMayor+" mayores de edad" );
+	}
+
+	public void busqueda() {
+		String nombreEstudiante=JOptionPane.showInputDialog(null,"ingrese el nombre del estudiante que desea buscar");
+		String nombreBuscado="";
+		int edadBuscada=0;
+		int cont=0;
+		 for (int i = 0; i < edades.length; i++) {
+			if(nombres[i].equalsIgnoreCase(nombreEstudiante)) {
+				nombreBuscado=nombres[i];
+				edadBuscada=edades[i];
+				cont++;
+			}
+		}
+		 if (cont!=0) {
+			 JOptionPane.showMessageDialog(null,"el estudiante es: " +nombreBuscado+" y tiene una edad de: "+edadBuscada+" años");
+			
+		} else {
+			
+			 JOptionPane.showMessageDialog(null,"el estudiante no se encontro");
+
+		}
+		
+
+	}
+
+	public void busquedaEdad() {
+		int edadEstudiante=Integer.parseInt(JOptionPane.showInputDialog(null,"ingrese la edad del estudiante que desea buscar"));
+		int edadBusqueda=0;
+		String nombreBusqueda="";
+		int contador=0;
+		for (int i = 0; i < edades.length; i++) {
+			if (edadEstudiante==edades[i]) {
+				edadBusqueda=edades[i];
+				nombreBusqueda=nombres[i];
+				contador++;
+			}
+		}
+		if (contador!=0) {
+			JOptionPane.showMessageDialog(null,"la edad: "+edadBusqueda+" años, le pertenece a: "+nombreBusqueda);
+			
+		}else {
+			
+			 JOptionPane.showMessageDialog(null,"el estudiante no se encontro");
+
+		}
+
+	}
+
+}
